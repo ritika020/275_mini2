@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcommon.a CMakeFiles/common.dir/shared_memory.cpp.o CMakeFiles/common.dir/config.cpp.o CMakeFiles/common.dir/data.pb.cc.o CMakeFiles/common.dir/data.grpc.pb.cc.o
+/usr/bin/ranlib libcommon.a

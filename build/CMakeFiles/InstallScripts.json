@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/ritikakhandelwal/Code/275_mini2/build/cmake_install.cmake",
+		"/Users/ritikakhandelwal/Code/275_mini2/build/cpp_servers/common/cmake_install.cmake",
+		"/Users/ritikakhandelwal/Code/275_mini2/build/cpp_servers/node_b/cmake_install.cmake",
+		"/Users/ritikakhandelwal/Code/275_mini2/build/cpp_servers/node_c/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+service DataService {
+  rpc PushData (DataPacket) returns (Ack);
+}
+
+message DataPacket {
+  string id = 1;
+  string payload = 2;
+}
+
+message Ack {
+  bool received = 1;
+}
