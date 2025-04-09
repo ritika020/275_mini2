@@ -13,3 +13,8 @@ find_package(gRPC REQUIRED)
 add_subdirectory(cpp_servers/common)
 add_subdirectory(cpp_servers/node_b)
 add_subdirectory(cpp_servers/node_c)
+
+target_include_directories(common PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    /opt/homebrew/include
+)

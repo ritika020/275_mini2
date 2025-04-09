@@ -13,19 +13,38 @@ class DataServiceImpl : public DataService::Service {
     Status PushData(ServerContext* context, const DataPacket* request, Ack* reply) override {
         std::string payload = request->payload();
         std::cout << "[Node B] Received: " << payload << std::endl;
+
+        
+        // Store to shared memory
+
         write_to_shared_memory("/node_b", payload);
         reply->set_received(true);
+    
 
         // Forward to child C
         auto children = get_children("B");
         for (const auto& child : children) {
+
+            std::cout << "[DEBUG] Forwarding to child: " << child << std::endl;
+            std::cout << "[DEBUG] Connecting to: localhost:50052" << std::endl;
+
             auto stub = DataService::NewStub(grpc::CreateChannel("localhost:50052", grpc::InsecureChannelCredentials()));
+
             DataPacket pkt;
             pkt.set_id(request->id());
             pkt.set_payload("[FWD B→C] " + payload);
+
             Ack ack;
             grpc::ClientContext ctx;
-            stub->PushData(&ctx, pkt, &ack);
+            grpc::Status status = stub->PushData(&ctx, pkt, &ack);
+
+            
+            if (status.ok()) {
+                std::cout << "[DEBUG] Successfully forwarded to " << child << std::endl;
+            } else {
+                std::cerr << "[ERROR] Failed to forward to " << child << ": " << status.error_message() << std::endl;
+            }
+
         }
 
         return Status::OK;
