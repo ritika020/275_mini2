@@ -1,1 +1,0 @@
-/usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/opt/homebrew/opt/libomp/lib CMakeFiles/node_c.dir/node_c.cpp.o -o node_c  ../common/libcommon.a -lgrpc++ -lprotobuf

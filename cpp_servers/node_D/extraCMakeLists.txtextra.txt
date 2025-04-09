@@ -1,0 +1,6 @@
+file(GLOB SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.h"
+)
+
+add_node(node_D ${SOURCES})

@@ -1,0 +1,8 @@
+# add_executable(node_c node_c.cpp)
+# target_link_libraries(node_c PRIVATE common)
+file(GLOB SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.h"
+)
+
+add_node(node_C ${SOURCES})

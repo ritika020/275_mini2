@@ -1,12 +1,19 @@
-# macOS
-.DS_Store
-
-# Python
-__pycache__/
-
 # VSCode
 .vscode/
 
-# Build folders
+# Build artifacts
 build/
+*.o
+*.log
 cpp_servers/common_extra/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# macOS system files
+.DS_Store
+
+# Backup folder
+backup_unused_files/
