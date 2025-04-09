@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+
+# VSCode
+.vscode/
+
+# Build folders
+build/
+cpp_servers/common_extra/
