@@ -24,17 +24,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ndata.proto\")\n\nDataPacket\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07payload\x18\x02 \x01(\t\"\x17\n\x03\x41\x63k\x12\x10\n\x08received\x18\x01 \x01(\x08\x32,\n\x0b\x44\x61taService\x12\x1d\n\x08PushData\x12\x0b.DataPacket\x1a\x04.Ackb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ndata.proto\x12\x0b\x64istributed\"%\n\x07\x44\x61taRow\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\x15\n\x03\x41\x63k\x12\x0e\n\x06status\x18\x01 \x01(\t2E\n\x0f\x44\x61taPushService\x12\x32\n\x08SendData\x12\x14.distributed.DataRow\x1a\x10.distributed.Ackb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'data_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_DATAPACKET']._serialized_start=14
-  _globals['_DATAPACKET']._serialized_end=55
-  _globals['_ACK']._serialized_start=57
-  _globals['_ACK']._serialized_end=80
-  _globals['_DATASERVICE']._serialized_start=82
-  _globals['_DATASERVICE']._serialized_end=126
+  _globals['_DATAROW']._serialized_start=27
+  _globals['_DATAROW']._serialized_end=64
+  _globals['_ACK']._serialized_start=66
+  _globals['_ACK']._serialized_end=87
+  _globals['_DATAPUSHSERVICE']._serialized_start=89
+  _globals['_DATAPUSHSERVICE']._serialized_end=158
 # @@protoc_insertion_point(module_scope)
