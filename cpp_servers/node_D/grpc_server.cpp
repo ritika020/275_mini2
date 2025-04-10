@@ -3,6 +3,8 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <chrono>
+#include <sys/resource.h>
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
@@ -15,6 +17,8 @@ using grpc::Status;
 Status GRPCServerDImpl::SendData(ServerContext* context,
                                  const distributed::DataRow* request,
                                  distributed::Ack* reply) {
+    auto start = std::chrono::high_resolution_clock::now();
+
     std::string key = request->key();
     std::string value = request->value();
 
@@ -23,20 +27,14 @@ Status GRPCServerDImpl::SendData(ServerContext* context,
     SharedMemoryWriter shm_writer("/node_d_memory", 4096);
     shm_writer.write(key + ":" + value);
 
+    struct rusage usage;
+    getrusage(RUSAGE_SELF, &usage);
+    std::cout << "Node D memory: " << usage.ru_maxrss / 1024.0 << " MB" << std::endl;
+
+    auto end = std::chrono::high_resolution_clock::now();
+    double ms = std::chrono::duration<double, std::milli>(end - start).count();
+    std::cout << "Node D handled row in " << ms << " ms" << std::endl;
+
     reply->set_status("RECEIVED");
     return Status::OK;
-}
-
-void RunServerD() {
-    std::string server_address("0.0.0.0:50054");
-    GRPCServerDImpl service;
-
-    ServerBuilder builder;
-    builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
-    builder.RegisterService(&service);
-
-    std::unique_ptr<Server> server(builder.BuildAndStart());
-    std::cout << "Node D server listening on " << server_address << std::endl;
-
-    server->Wait();
 }

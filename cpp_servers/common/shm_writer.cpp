@@ -4,6 +4,7 @@
 #include <unistd.h>   // For ftruncate, close
 #include <cstring>    // For memcpy
 #include <iostream>
+#include <chrono>     // Add for timing
 
 SharedMemoryWriter::SharedMemoryWriter(const std::string& name, size_t size)
     : shm_name_(name), shm_size_(size), shm_fd_(-1), shm_ptr_(nullptr) {
@@ -38,6 +39,13 @@ SharedMemoryWriter::~SharedMemoryWriter() {
 
 void SharedMemoryWriter::write(const std::string& data) {
     if (shm_ptr_ != nullptr && data.size() < shm_size_) {
+        auto start = std::chrono::high_resolution_clock::now();  // ⏱️ start
+
         memcpy(shm_ptr_, data.c_str(), data.size());
+
+        auto end = std::chrono::high_resolution_clock::now();    // ⏱️ end
+        double duration_us = std::chrono::duration<double, std::micro>(end - start).count();
+        std::cout << "[SharedMemoryWriter] Wrote " << data.size()
+                  << " bytes in " << duration_us << " µs" << std::endl;
     }
 }

@@ -6,6 +6,8 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <chrono>          
+#include <sys/resource.h> 
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
@@ -18,6 +20,8 @@ using grpc::Status;
 Status GRPCServerCImpl::SendData(ServerContext* context,
                                  const distributed::DataRow* request,
                                  distributed::Ack* reply) {
+    auto start = std::chrono::high_resolution_clock::now();
+
     std::string key = request->key();
     std::string value = request->value();
 
@@ -25,6 +29,7 @@ Status GRPCServerCImpl::SendData(ServerContext* context,
 
     // Perform local partition to decide next node
     int node = std::hash<std::string>{}(key) % 3;
+
     if (node == 0) {
         SharedMemoryWriter shm_writer("/node_c_memory", 4096);
         shm_writer.write(key + ":" + value);
@@ -33,6 +38,16 @@ Status GRPCServerCImpl::SendData(ServerContext* context,
         GRPCClient forwarder(target_address);
         forwarder.sendToNode(key, value);
     }
+
+    // Print memory usage
+    struct rusage usage;
+    getrusage(RUSAGE_SELF, &usage);
+    std::cout << "Node C memory usage: " << usage.ru_maxrss / 1024.0 << " MB" << std::endl;
+
+    // Print time spent
+    auto end = std::chrono::high_resolution_clock::now();
+    double duration_ms = std::chrono::duration<double, std::milli>(end - start).count();
+    std::cout << "Node C handled row in " << duration_ms << " ms" << std::endl;
 
     reply->set_status("RECEIVED");
     return Status::OK;
