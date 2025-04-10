@@ -14,29 +14,37 @@ This project implements a distributed data ingestion and processing pipeline acr
 
 ## Architecture
 
+           +--------------+
+           |  Python CSV  |
+           |   Client     |
+           +------+-------+
+                  |
+                  v
+              [ Node A ]
+           (Global Hash Partition)
+             /          \
+            v            v
+        [Node B]      [Node C]
+     (Local Partitioning to D/E)
+        |   \           /   |
+        v    v         v    v
+      [Node D]       [Node E]
+      (Final Storage + Query)
 
-       +--------------+
-       |  Python CSV  |
-       |   Client     |
-       +------+-------+
-              |
-              v
-          [ Node A ]
-       (Global Hash Partition)
-         /          \
-        v            v
-    [Node B]      [Node C]
- (Local Partitioning to D/E)
-    |   \           /   |
-    v    v         v    v
-  [Node D]       [Node E]
-  (Final Storage + Query)
+
 
 
 
 ## Project Structure:
 
-275_mini2/ ├── cpp_servers/ │ ├── common/ │ └── node_{A,B,C,D,E}/ ├── proto/ ├── python_clients/ ├── build/ # (generated) ├── backup_unused_files/ # (not tracked) └── CMakeLists.txt
+275_mini2/
+├── cpp_servers/
+│   ├── common/
+│   └── node_{A,B,C,D,E}/
+├── proto/
+├── python_clients/
+├── build/
+└── CMakeLists.txt
 
 
 ---
