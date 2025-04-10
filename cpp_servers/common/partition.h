@@ -1,16 +1,3 @@
-// #pragma once
-// #include <string>
-
-// // Hash-based partitioning logic
-// // Used to decide whether to send to Node B or Node C
-// class Partitioner {
-// public:
-//     // Returns 0 or 1 based on hash(key) % 2
-//     static int global_partition(const std::string& key);
-// };
-
-
-
 #pragma once
 #include <string>
 

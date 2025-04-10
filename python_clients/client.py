@@ -1,34 +1,3 @@
-# import grpc
-# import csv
-# import time
-# # import proto.node_pb2 as node_pb2
-# # import proto.node_pb2_grpc as node_pb2_grpc
-
-# # from proto import node_pb2, node_pb2_grpc
-
-# from data_pb2 import DataRow
-# from data_pb2_grpc import DataPushServiceStub
-
-
-# def send_data(stub, key, value):
-#     data_row = node_pb2.DataRow(key=key, value=value)
-#     response = stub.SendData(data_row)
-#     print(f"Sent: {key}, Response: {response.status}")
-
-# def run():
-#     channel = grpc.insecure_channel('localhost:50051')  # Node A
-#     stub = node_pb2_grpc.DataPushServiceStub(channel)
-    
-#     with open("python_clients/Motor_Vehicle_Collisions_-_Crashes_20250123.csv", "r") as f:
-#         reader = csv.reader(f)
-#         for row in reader:
-#             key, value = row[0], row[1]
-#             send_data(stub, key, value)
-#             time.sleep(0.1)
-
-# if __name__ == "__main__":
-#     run()
-
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
